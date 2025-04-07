@@ -7,6 +7,11 @@ spring:
     mongodb:
       uri: mongodb://localhost:27017/fitness
       database: fitness
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
   main:
     banner-mode: off
 
@@ -15,4 +20,28 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
 
+rabbitmq:
+  exchange:
+    name: fitness.exchange
+  queue:
+    name: activity.queue
+  routing:
+    key: activity.tracking
+
+#  [Producer]
+#  |
+#  |  (sends message to 'fitness.exchange' with routing key 'activity.tracking')
+#  v
+#  [Exchange: fitness.exchange]
+#  |
+#  | (checks routing key 'activity.tracking')
+#  v
+#  [Queue: activity.queue]
+#  |
+#  | (message stored)
+#  v
+#  [Consumer] (reads and processes the message)
+
+
+#  "Hey, fitness.exchange, if a message comes with routing key activity.tracking, send it to activity.queue."
 
