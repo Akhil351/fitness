@@ -26,6 +26,6 @@ public class Recommendation {
     private List<String> improvements;
     private List<String> suggestions;
     private List<String> safety;
-    @CreatedDate
-    private LocalDateTime createdAt;
+//    @CreatedDate
+//    private LocalDateTime createdAt;
 }

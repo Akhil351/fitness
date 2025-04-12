@@ -1,7 +1,7 @@
 
 spring:
   application:
-    name: ACTIVITY-SERVICE
+    name: GATEWAY-SERVICE
   config:
     import: optional:configserver:http://localhost:8888
 
