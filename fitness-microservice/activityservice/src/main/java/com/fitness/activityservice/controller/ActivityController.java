@@ -15,7 +15,10 @@ public class ActivityController {
     @Autowired
     private ActivityService activityService;
     @PostMapping
-    public ResponseEntity<ActivityResponse> tractActivity(@RequestBody ActivityRequest request){
+    public ResponseEntity<ActivityResponse> tractActivity(@RequestBody ActivityRequest request,@RequestHeader("X-User-Id") String userId){
+        if(request.getUserId()==null){
+            request.setUserId(userId);
+        }
         return ResponseEntity.ok(activityService.trackActivity(request));
 
     }
