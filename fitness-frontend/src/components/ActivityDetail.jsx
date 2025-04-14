@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { getActivityDetail } from "../services/api";
+import { getActivitiesById, getActivityDetail } from "../services/api";
 import { Box, Card, CardContent, Divider, Typography } from "@mui/material";
 
 export default function ActivityDetail() {
@@ -18,8 +18,18 @@ export default function ActivityDetail() {
         console.log(error);
       }
     };
-    fetchActivityDetail(); // ✅ Call it outside the definition
+    fetchActivityDetail();
+    fetchActivities();
   }, [id]);
+
+    const fetchActivities = async () => {
+      try {
+        const response = await getActivitiesById(id);
+        setActivity(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
   if (!activity) {
     return <Typography>Loading...</Typography>;
