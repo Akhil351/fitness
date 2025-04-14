@@ -17,17 +17,29 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse register(RegisterRequest request) {
         if(userRepo.existsByEmail(request.getEmail())){
-            throw  new RuntimeException("Email already exist");
+            User existingUser=userRepo.findByEmail(request.getEmail());
+            return UserResponse.builder()
+                    .id(existingUser.getId())
+                    .keyCloakId(existingUser.getKeyCloakId())
+                    .password(existingUser.getPassword())
+                    .email(existingUser.getEmail())
+                    .firstName(existingUser.getFirstName())
+                    .lastName(existingUser.getLastName())
+                    .createdAt(existingUser.getCreatedAt())
+                    .updateAt(existingUser.getUpdateAt())
+                    .build();
         }
         User user=User.builder()
                 .email(request.getEmail())
                 .password(request.getPassword())
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
+                .keyCloakId(request.getKeyCloakId())
                 .build();
         User savedUser=userRepo.save(user);
         return UserResponse.builder()
                 .id(savedUser.getId())
+                .keyCloakId(savedUser.getKeyCloakId())
                 .password(savedUser.getPassword())
                 .email(savedUser.getEmail())
                 .firstName(savedUser.getFirstName())
@@ -55,6 +67,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public Boolean existByUserId(String userId) {
         log.info("Calling User Validation Api for userId:{}",userId);
-        return userRepo.existsById(userId);
+        return userRepo.existsByKeyCloakId(userId);
     }
 }

@@ -1,4 +1,4 @@
-package com.fitness.userservice.dto;
+package com.akhil.gateway.user;
 
 import lombok.Builder;
 import lombok.Data;
