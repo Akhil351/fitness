@@ -24,6 +24,7 @@ public class KeyCloakUserSyncFilter implements WebFilter {
         String userId = exchange.getRequest().getHeaders().getFirst("X-User-ID");
         RegisterRequest registerRequest=getUserDetails(token);
         if(userId==null){
+            assert registerRequest != null;
             userId=registerRequest.getKeyCloakId();
         }
         if (userId != null && token != null) {
